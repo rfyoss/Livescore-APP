@@ -46,7 +46,7 @@ app.post('/api/favorites', async (req, res, next) => {
       res.status(400).json({ error: 'team_id is required' });
       return;
     }
-    
+
     const teamIdNum = parseInt(team_id);
     await db.query('INSERT INTO favorites (team_id) VALUES ($1)', [teamIdNum]);
     const { rows: updatedFavs } = await db.query('SELECT * FROM favorites');
