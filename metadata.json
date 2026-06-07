@@ -1,0 +1,6 @@
+{
+  "name": "Football Real-Time App",
+  "description": "Football stats application featuring live match updates, player stats, league standings, search, and simulated real-time events.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
