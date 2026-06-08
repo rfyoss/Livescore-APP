@@ -1,18 +1,21 @@
 import pg from 'pg';
-import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { Team, Player, League, Match, MatchEvent, Standing, Favorite } from '../../../src/types';
+import type {
+  Team,
+  Player,
+  League,
+  Match,
+  MatchEvent,
+  Standing,
+  Favorite
+} from '../types';
 
 // ES module equivalent of __dirname
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import dotenv from 'dotenv';
 
-// Load .env from backend-express/src/.env (explicit path, always found regardless of cwd)
-dotenv.config({ path: path.resolve(__dirname, '../.env') });
-// Also try root .env as fallback
-dotenv.config({ path: path.resolve(process.cwd(), '.env') });
-
+dotenv.config();
+// Also try root .env as a fallback
 const { Pool } = pg;
 
 // Connection Pool — initialized lazily inside initDatabase()
