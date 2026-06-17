@@ -115,23 +115,6 @@ Frontend
 4. Backend mengambil data dari database.
 5. Frontend menampilkan data kepada pengguna.
 
-
-# ⚙ Data Engine Service
-
-Data Engine Service bertugas mengelola seluruh proses sinkronisasi data dari API Football ke database cloud.
-
-### Fungsi Utama
-
-* Integrasi API Football
-* Sinkronisasi data pertandingan
-* Sinkronisasi data tim
-* Sinkronisasi data pemain
-* Sinkronisasi data klasemen
-* Validasi data
-* Otomatisasi pembaruan data
-
----
-
 # ⏰ Jadwal Sinkronisasi Otomatis
 
 | Proses                    | Frekuensi      |
