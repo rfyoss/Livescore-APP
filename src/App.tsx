@@ -170,8 +170,8 @@ export default function App() {
                 </svg>
               </div>
               <div>
-                <span className="font-extrabold text-sm sm:text-base tracking-tight block font-display">
-                  STRIKER<span className="text-emerald-400">.IO</span>
+              <span className="font-extrabold text-sm sm:text-base tracking-tight block font-display">
+                LIVESCORE<span className="text-emerald-400">PNL</span>
                 </span>
                 <span className="text-[9px] font-mono text-slate-400 uppercase tracking-widest block leading-none">Live Pitch Tracker</span>
               </div>
