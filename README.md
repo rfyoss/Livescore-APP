@@ -1,380 +1,348 @@
 # ⚽ LiveScore PnL Cloud 
 
-Real-time football live score platform built with **React, Express.js, Laravel Data Engine, Supabase PostgreSQL, Socket.IO, and Railway Cloud Deployment**.
+Aplikasi LiveScore berbasis cloud yang menyediakan informasi pertandingan sepak bola secara real-time. Sistem ini dibangun menggunakan arsitektur terdistribusi yang terdiri dari Frontend, Backend Service, Data Engine Service, Database Cloud, dan Infrastruktur Cloud Deployment.
 
-The system automatically synchronizes football data from API-Football, stores it in a cloud database, processes updates through a data pipeline, and delivers live match information to users through a responsive web application.
+Data pertandingan diperoleh dari API Football, disinkronkan secara otomatis ke database cloud, kemudian disajikan kepada pengguna melalui aplikasi web secara real-time.
 
-# 📖 Overview
+# 📖 Gambaran Umum
 
-This project provides:
+LiveScore PnL Cloud merupakan platform informasi sepak bola yang menyediakan:
 
-* Live football match scores
-* Team information
-* Player information
-* League standings
-* Real-time match updates
-* Cloud-based deployment architecture
+* Skor pertandingan secara real-time
+* Informasi tim
+* Informasi pemain
+* Klasemen liga
+* Pembaruan pertandingan secara otomatis
+* Infrastruktur berbasis cloud
 
-The platform uses a multi-layer architecture consisting of:
-
-1. Data Source Layer
-2. Data Engineering Layer
-3. Database Layer
-4. Backend Service Layer
-5. Frontend Presentation Layer
+Proyek ini menerapkan pendekatan **Service-Oriented Architecture (SOA)**, di mana setiap komponen memiliki tanggung jawab yang berbeda dan saling terintegrasi.
 
 ---
 
-# 🏗 System Architecture
+# 🏗 Arsitektur Sistem
 
 ```text
-┌───────────────────────────┐
-│      API Football         │
-└─────────────┬─────────────┘
-              │
-              ▼
+                    API FOOTBALL
+                          │
+                          ▼
 
-┌───────────────────────────┐
-│  Laravel Data Engine      │
-│                           │
-│  - ApiFootballService     │
-│  - SyncMatchesJob         │
-│  - SyncTeamsJob           │
-│  - SyncPlayersJob         │
-│  - SyncStandingsJob       │
-└─────────────┬─────────────┘
-              │
-              ▼
+            ┌─────────────────────────┐
+            │    Data Engine Service  │
+            │                         │
+            │ - Integrasi API         │
+            │ - Sinkronisasi Data     │
+            │ - Scheduler Otomatis    │
+            └───────────┬─────────────┘
+                        │
+                        ▼
 
-┌───────────────────────────┐
-│   Supabase PostgreSQL     │
-└─────────────┬─────────────┘
-              │
-              ▼
+            ┌─────────────────────────┐
+            │ Supabase PostgreSQL     │
+            │ Database Cloud          │
+            └───────────┬─────────────┘
+                        │
+                        ▼
 
-┌───────────────────────────┐
-│ Express.js Backend        │
-│                           │
-│ - REST API                │
-│ - Socket.IO               │
-│ - Cache Layer             │
-└─────────────┬─────────────┘
-              │
-              ▼
+            ┌─────────────────────────┐
+            │ Express Backend Service │
+            │                         │
+            │ - REST API              │
+            │ - Socket.IO             │
+            └───────────┬─────────────┘
+                        │
+                        ▼
 
-┌───────────────────────────┐
-│ React Frontend            │
-└───────────────────────────┘
+            ┌─────────────────────────┐
+            │ React Frontend          │
+            │ User Interface          │
+            └─────────────────────────┘
 ```
 
 ---
 
-# ☁ Cloud Deployment Architecture
+# ☁ Arsitektur Cloud Deployment
 
 ```text
                     INTERNET
-                         │
-                         ▼
+                        │
+                        ▼
 
-┌────────────────────────────────────┐
-│           Railway Cloud            │
-├────────────────────────────────────┤
-│                                    │
-│ React Frontend                     │
-│ Express Backend                    │
-│ Laravel Data Engine                │
-│ Scheduler & Queue                  │
-│                                    │
-└───────────────┬────────────────────┘
-                │
-                ▼
+┌──────────────────────────────────────┐
+│            Railway Cloud             │
+├──────────────────────────────────────┤
+│                                      │
+│ Frontend Service (React)             │
+│ Backend Service (Express.js)         │
+│ Data Engine Service                  │
+│ Scheduler & Sync Jobs                │
+│                                      │
+└──────────────────┬───────────────────┘
+                   │
+                   ▼
 
-┌────────────────────────────────────┐
-│     Supabase PostgreSQL Cloud      │
-└────────────────────────────────────┘
+      ┌────────────────────────────┐
+      │ Supabase PostgreSQL Cloud  │
+      └────────────────────────────┘
 ```
 
 ---
 
-# 🔄 Data Flow
+# 🔄 Alur Data Sistem
 
-## Match Synchronization
+## Sinkronisasi Data
 
 ```text
 API Football
       │
       ▼
-ApiFootballService
+Data Engine Service
       │
       ▼
-SyncMatchesJob
+Supabase PostgreSQL
       │
       ▼
-Supabase Database
-      │
-      ▼
-Express API
+Backend Service
       │
       ▼
 Frontend
 ```
 
----
+### Penjelasan
 
-## Standings Synchronization
+1. Data pertandingan diambil dari API Football.
+2. Data Engine melakukan sinkronisasi dan validasi data.
+3. Data disimpan ke database Supabase PostgreSQL.
+4. Backend mengambil data dari database.
+5. Frontend menampilkan data kepada pengguna.
 
-```text
-API Football
-      │
-      ▼
-ApiFootballService
-      │
-      ▼
-SyncStandingsJob
-      │
-      ▼
-standings table
-```
 
----
+# ⚙ Data Engine Service
 
-## Team Synchronization
+Data Engine Service bertugas mengelola seluruh proses sinkronisasi data dari API Football ke database cloud.
 
-```text
-API Football
-      │
-      ▼
-ApiFootballService
-      │
-      ▼
-SyncTeamsJob
-      │
-      ▼
-teams table
-```
+### Fungsi Utama
+
+* Integrasi API Football
+* Sinkronisasi data pertandingan
+* Sinkronisasi data tim
+* Sinkronisasi data pemain
+* Sinkronisasi data klasemen
+* Validasi data
+* Otomatisasi pembaruan data
 
 ---
 
-## Player Synchronization
+# ⏰ Jadwal Sinkronisasi Otomatis
 
-```text
-API Football
-      │
-      ▼
-ApiFootballService
-      │
-      ▼
-SyncPlayersJob
-      │
-      ▼
-players table
-```
+| Proses                    | Frekuensi      |
+| ------------------------- | -------------- |
+| Sinkronisasi Pertandingan | Setiap 1 Menit |
+| Sinkronisasi Klasemen     | Setiap 1 Jam   |
+| Sinkronisasi Tim          | Setiap Hari    |
+| Sinkronisasi Pemain       | Setiap Hari    |
 
 ---
 
-# ⚙ Data Engineering Pipeline
+# 🗄 Struktur Data
 
-The Laravel Data Engine is responsible for automating the synchronization process between API-Football and the cloud database.
+## Tabel Teams
 
-### Extract
+Menyimpan informasi klub sepak bola:
 
-Retrieve data from API-Football:
-
-* Live Matches
-* Teams
-* Players
-* Standings
-
-### Transform
-
-Normalize and validate:
-
-* Match status
-* Team information
-* Player information
-* League statistics
-
-### Load
-
-Store synchronized data into PostgreSQL using:
-
-```php
-updateOrCreate()
-```
-
-to prevent duplication and maintain consistency.
+* ID Tim
+* Nama Tim
+* Logo
+* Negara
+* Tahun Berdiri
+* Stadion
 
 ---
 
-# ⏰ Automated Scheduler
+## Tabel Players
 
-Laravel Scheduler automatically executes synchronization jobs.
+Menyimpan informasi pemain:
 
-| Job              | Frequency    |
-| ---------------- | ------------ |
-| SyncMatchesJob   | Every Minute |
-| SyncStandingsJob | Hourly       |
-| SyncTeamsJob     | Daily        |
-| SyncPlayersJob   | Daily        |
-
----
-
-# 🗄 Database Entities
-
-### Team
-
-```text
-Team
-├── Players
-├── Home Matches
-└── Away Matches
-```
-
-### Match
-
-```text
-Match
-├── Home Team
-└── Away Team
-```
-
-### Standing
-
-```text
-Standing
-└── Team
-```
+* ID Pemain
+* ID Tim
+* Nama
+* Posisi
+* Kewarganegaraan
+* Foto
 
 ---
 
-# 🚀 Features
+## Tabel Matches
 
-## Live Match Tracking
+Menyimpan data pertandingan:
 
-* Real-time score updates
-* Match status monitoring
-* Ongoing fixture synchronization
-
-## Team Information
-
-* Team profile
-* Club information
-* Venue information
-
-## Player Information
-
-* Squad data
-* Position
-* Nationality
-
-## League Standings
-
-* Current rankings
-* Points
-* Wins
-* Draws
-* Losses
+* ID Pertandingan
+* Liga
+* Tim Tuan Rumah
+* Tim Tamu
+* Tanggal Pertandingan
+* Status Pertandingan
+* Skor Tuan Rumah
+* Skor Tim Tamu
 
 ---
 
-# 🛠 Technology Stack
+## Tabel Standings
 
-### Frontend
+Menyimpan data klasemen:
+
+* Tim
+* Main
+* Menang
+* Seri
+* Kalah
+* Gol Memasukkan
+* Gol Kebobolan
+* Poin
+
+---
+
+# 🚀 Fitur Utama
+
+### Live Score
+
+* Pembaruan skor secara real-time
+* Status pertandingan langsung
+* Monitoring pertandingan berlangsung
+
+### Informasi Tim
+
+* Profil klub
+* Informasi stadion
+* Negara asal
+
+### Informasi Pemain
+
+* Data pemain
+* Posisi bermain
+* Informasi tim
+
+### Klasemen Liga
+
+* Posisi klasemen
+* Jumlah poin
+* Statistik pertandingan
+
+### Komunikasi Real-Time
+
+* Socket.IO
+* Pembaruan data otomatis
+* Sinkronisasi frontend secara langsung
+
+---
+
+# 🛠 Teknologi yang Digunakan
+
+## Frontend
 
 * React
-* Vite
 * TypeScript
+* Vite
 
-### Backend
+## Backend Service
 
 * Express.js
-* Socket.IO
 * Node.js
+* Socket.IO
 
-### Data Engineering
+## Data Engine Service
 
-* Laravel
+* Laravel Framework
 * Laravel Scheduler
-* Laravel Queue
+* Queue Job
 
-### Database
+## Database
 
 * Supabase PostgreSQL
 
-### Cloud Infrastructure
+## Cloud Platform
 
 * Railway
 
-### External Services
+## Sumber Data
 
-* API-Football
-
----
-
-# 👥 Team Responsibilities
-
-## API & Database Engineer
-
-Responsible for:
-
-* API-Football configuration
-* Database schema design
-* Supabase management
+* API Football (API-Sports)
 
 ---
 
-## Data Engineer
+# 👥 Pembagian Tugas Tim
 
-Responsible for:
+## 1. API & Database Engineer
 
-* ApiFootballService
-* Sync Jobs
-* Scheduler
-* Data synchronization
-* Data validation
-* ETL pipeline
+Tanggung Jawab:
+
+* Konfigurasi API Football
+* Desain Database
+* Manajemen Supabase
+* Perancangan ERD
 
 ---
 
-## Backend Engineer
+## 2. Data Engineer
 
-Responsible for:
+Tanggung Jawab:
 
-* Express API
-* Business logic
+* Data Engine Service
+* Integrasi API Football
+* Sinkronisasi Data
+* Scheduler Otomatis
+* Validasi Data
+* Monitoring Pipeline
+
+---
+
+## 3. Backend Engineer
+
+Tanggung Jawab:
+
+* REST API
+* Business Logic
 * Socket.IO
-* Cache management
+* Integrasi Database
 
 ---
 
-## Frontend Engineer
+## 4. Frontend Engineer
 
-Responsible for:
+Tanggung Jawab:
 
-* React UI
-* Dashboard
-* Live score pages
-* User experience
-
----
-
-## Cloud Engineer
-
-Responsible for:
-
-* Railway deployment
-* Environment variables
-* Monitoring
-* Infrastructure configuration
+* User Interface
+* Dashboard Live Score
+* Halaman Tim dan Pemain
+* User Experience
 
 ---
 
-# 📈 Future Improvements
+## 5. Cloud Engineer
 
-* Redis distributed caching
-* Webhook-based synchronization
-* Multi-league support
-* Analytics dashboard
-* Match prediction module
-* Event-driven architecture
+Tanggung Jawab:
 
+* Deployment Railway
+* Konfigurasi Environment
+* Monitoring Infrastruktur
+* Manajemen Service Cloud
+
+---
+
+# 🎯 Tujuan Proyek
+
+* Menyediakan informasi sepak bola secara real-time.
+* Mengimplementasikan arsitektur cloud modern.
+* Menerapkan sinkronisasi data otomatis.
+* Mengintegrasikan berbagai layanan dalam sistem terdistribusi.
+* Mengembangkan aplikasi web yang responsif dan scalable.
+
+---
+
+# 📈 Pengembangan Selanjutnya
+
+* Implementasi Redis Cache
+* Dukungan Multi-Liga
+* Dashboard Analitik Pertandingan
+* Sistem Notifikasi
+* Event-Driven Architecture
+* Prediksi Hasil Pertandingan Berbasis Machine Learning
