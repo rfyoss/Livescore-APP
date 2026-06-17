@@ -67,10 +67,10 @@ export default function LiveMatches({ onSelectMatch }: LiveMatchesProps) {
             <Zap className="w-3.5 h-3.5 text-emerald-400 fill-emerald-400 animate-pulse" /> Live Tracker Mode Active
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-2 font-display">
-            Real-Time Pitch Tracker
+            Real Time Live Match
           </h1>
           <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-5">
-            Follow major European campaigns with live stats, real-time score overlays, and simulated action updates.
+            Premiere League campaigns with live stats, real-time score overlays, and simulated action updates.
           </p>
 
           {/* Search box overlay */}
