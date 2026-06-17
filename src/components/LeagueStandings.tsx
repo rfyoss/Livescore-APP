@@ -100,7 +100,7 @@ export default function LeagueStandings({
         points: 66,
         team: {
           name: 'Aston Villa',
-          logo: 'https://upload.wikimedia.org/wikipedia/en/9/9f/Aston_Villa_FC_new_crest.svg',
+          logo: 'https://media.api-sports.io/football/teams/66.png',
         },
       },
       {
@@ -130,7 +130,7 @@ export default function LeagueStandings({
         points: 61,
         team: {
           name: 'Brighton',
-          logo: 'https://upload.wikimedia.org/wikipedia/en/6/6d/Brighton_and_Hove_Albion_FC.svg',
+          logo: 'https://media.api-sports.io/football/teams/51.png',
         },
       },
       {
