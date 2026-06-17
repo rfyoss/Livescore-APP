@@ -121,8 +121,10 @@ export default function App() {
         : `/api/players/search?q=${encodeURIComponent(searchQuery)}`;
       
       const res = await fetch(endpoint);
+      // PERUBAHAN 3: Memastikan data yang di-set berupa Array
       if (res.ok) {
-        setSearchResults(await res.json());
+        const data = await res.json();
+        setSearchResults(Array.isArray(data) ? data : []);
       }
     } catch (err) {
       console.error('Unified Search Failed:', err);
@@ -454,12 +456,16 @@ export default function App() {
                             id={`search-player-item-${player.id}`}
                           >
                             <div className="flex items-center gap-3">
+                              {/* PERUBAHAN 1: Memberikan fallback 'NA' jika posisi bernilai null */}
                               <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center font-bold text-[10px] text-slate-500">
-                                {player.position.slice(0, 2).toUpperCase()}
+                                {player.position
+                                  ? player.position.slice(0, 2).toUpperCase()
+                                  : 'NA'}
                               </div>
                               <div>
+                                {/* PERUBAHAN 2: Memberikan fallback nama 'Unknown Player' jika nama bernilai null */}
                                 <h4 className="font-extrabold text-slate-800 text-xs leading-tight group-hover:text-emerald-600 transition-colors">
-                                  {player.name}
+                                  {player.name || 'Unknown Player'}
                                 </h4>
                                 <p className="text-[10px] text-slate-400">{player.team?.name || 'Club Roster'}</p>
                               </div>
