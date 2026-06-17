@@ -1,4 +1,4 @@
-# ⚽ LiveScore PnL Cloud Application
+# ⚽ LiveScore PnL Cloud 
 
 Real-time football live score platform built with **React, Express.js, Laravel Data Engine, Supabase PostgreSQL, Socket.IO, and Railway Cloud Deployment**.
 
