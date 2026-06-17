@@ -12,48 +12,48 @@ export default function LeagueStandings({ onSelectTeam }: LeagueStandingsProps) 
   useEffect(() => {
     setStandings([
       {
-        id: 40,
-        team_id: 40,
+        id: 1,
+        team_id: 1,
         played: 38,
-        win: 29,
-        draw: 6,
-        loss: 3,
-        goals_for: 92,
-        goals_against: 28,
-        points: 93,
+        win: 25,
+        draw: 9,
+        loss: 4,
+        goals_for: 86,
+        goals_against: 41,
+        points: 84,
         team: {
           name: 'Liverpool',
-          logo: 'https://media.api-sports.io/football/teams/40.png',
+          logo: 'https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg',
         },
       },
       {
-        id: 42,
-        team_id: 42,
+        id: 2,
+        team_id: 2,
         played: 38,
-        win: 27,
-        draw: 8,
-        loss: 3,
-        goals_for: 88,
-        goals_against: 32,
-        points: 89,
+        win: 20,
+        draw: 14,
+        loss: 4,
+        goals_for: 69,
+        goals_against: 34,
+        points: 74,
         team: {
           name: 'Arsenal',
-          logo: 'https://media.api-sports.io/football/teams/42.png',
+          logo: 'https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg',
         },
       },
       {
-        id: 50,
-        team_id: 50,
+        id: 3,
+        team_id: 3,
         played: 38,
-        win: 26,
-        draw: 9,
-        loss: 3,
-        goals_for: 85,
-        goals_against: 30,
-        points: 87,
+        win: 21,
+        draw: 8,
+        loss: 9,
+        goals_for: 72,
+        goals_against: 44,
+        points: 71,
         team: {
           name: 'Man City',
-          logo: 'https://media.api-sports.io/football/teams/50.png',
+          logo: 'https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg',
         },
       },
     ]);
@@ -61,63 +61,44 @@ export default function LeagueStandings({ onSelectTeam }: LeagueStandingsProps) 
     setLoading(false);
   }, []);
 
-  const getZone = (pos: number) => {
-    if (pos <= 4) return 'UCL';
-    if (pos <= 6) return 'EUROPA';
-    if (pos <= 7) return 'CONFERENCE';
-    if (pos >= 18) return 'RELEGATION';
-    return '';
-  };
-
-  const getZoneStyle = (zone: string) => {
-    switch (zone) {
-      case 'UCL':
-        return 'text-blue-600 font-bold';
-      case 'EUROPA':
-        return 'text-green-600 font-bold';
-      case 'CONFERENCE':
-        return 'text-emerald-600 font-bold';
-      case 'RELEGATION':
-        return 'text-red-600 font-bold';
-      default:
-        return 'text-slate-400';
-    }
+  const getLogo = (url: string | undefined) => {
+    return url || 'https://via.placeholder.com/40';
   };
 
   return (
     <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
 
-      {/* HEADER GOOGLE STYLE */}
-      <div className="mb-6 pb-4 border-b">
-        <h2 className="text-xl font-bold flex items-center gap-2">
-          <Trophy className="w-5 h-5 text-amber-500" />
-          Premier League
-        </h2>
+      {/* HEADER */}
+      <div className="flex justify-between items-center mb-6 pb-4 border-b">
+        <div>
+          <h2 className="text-xl font-bold flex items-center gap-2">
+            <Trophy className="w-5 h-5 text-amber-500" />
+            Premier League 2024/25 Standings
+          </h2>
 
-        <p className="text-sm text-slate-500">
-          2024–2025 Season Standings
-        </p>
+          <p className="text-slate-500 text-sm mt-1">
+            Final league table
+          </p>
+        </div>
+
+        <div className="px-4 py-2 bg-emerald-50 border border-emerald-200 rounded-xl">
+          <span className="font-bold text-emerald-700">
+            Premier League
+          </span>
+        </div>
       </div>
 
       {loading ? (
-        <div className="py-20 text-center text-slate-500">
+        <div className="py-20 text-center">
           Loading standings...
         </div>
       ) : (
         <div className="overflow-x-auto">
 
-          {/* ZONE LABELS */}
-          <div className="flex flex-wrap gap-4 text-xs mb-4">
-            <span className="text-blue-600 font-bold">Champions League</span>
-            <span className="text-green-600 font-bold">Europa League</span>
-            <span className="text-emerald-600 font-bold">Conference League</span>
-            <span className="text-red-600 font-bold">Relegation</span>
-          </div>
-
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-slate-50 border-b text-slate-600">
-                <th className="p-3 text-left">#</th>
+              <tr className="border-b bg-slate-50">
+                <th className="p-3">#</th>
                 <th className="p-3 text-left">Club</th>
                 <th className="p-3">MP</th>
                 <th className="p-3">W</th>
@@ -126,7 +107,7 @@ export default function LeagueStandings({ onSelectTeam }: LeagueStandingsProps) 
                 <th className="p-3">GF</th>
                 <th className="p-3">GA</th>
                 <th className="p-3">GD</th>
-                <th className="p-3 font-bold">Pts</th>
+                <th className="p-3">Pts</th>
               </tr>
             </thead>
 
@@ -134,37 +115,47 @@ export default function LeagueStandings({ onSelectTeam }: LeagueStandingsProps) 
               {standings
                 .sort((a, b) => b.points - a.points)
                 .map((row, index) => {
-                  const pos = index + 1;
                   const gd = row.goals_for - row.goals_against;
-                  const zone = getZone(pos);
+                  const position = index + 1;
+
+                  const borderColor =
+                    position === 1
+                      ? 'border-l-4 border-amber-500'
+                      : position <= 4
+                      ? 'border-l-4 border-blue-500'
+                      : position <= 6
+                      ? 'border-l-4 border-green-500'
+                      : position >= 18
+                      ? 'border-l-4 border-red-500'
+                      : '';
 
                   return (
                     <tr
                       key={row.id}
-                      onClick={() => onSelectTeam(row.team_id)}
-                      className="border-b hover:bg-slate-50 cursor-pointer transition"
+                      onClick={() => {
+                        if (row.team_id) onSelectTeam(row.team_id);
+                      }}
+                      className={`${borderColor} hover:bg-slate-50 cursor-pointer transition`}
                     >
 
-                      {/* POSITION + ZONE */}
-                      <td className="p-3 font-bold">
-                        {pos}
-                        <div className={`text-[10px] ${getZoneStyle(zone)}`}>
-                          {zone}
-                        </div>
+                      {/* POSITION */}
+                      <td className="p-3 text-center font-bold">
+                        {position}
                       </td>
 
                       {/* CLUB */}
                       <td className="p-3">
                         <div className="flex items-center gap-3">
                           <img
-                            src={row.team?.logo || 'https://via.placeholder.com/30'}
-                            alt={row.team?.name}
+                            src={getLogo(row.team?.logo)}
+                            alt={row.team?.name || 'team'}
                             className="w-8 h-8 object-contain"
                             onError={(e) => {
                               (e.target as HTMLImageElement).src =
-                                'https://via.placeholder.com/30';
+                                'https://via.placeholder.com/40';
                             }}
                           />
+
                           <span className="font-semibold">
                             {row.team?.name || 'Unknown Team'}
                           </span>
@@ -177,9 +168,11 @@ export default function LeagueStandings({ onSelectTeam }: LeagueStandingsProps) 
                       <td className="text-center">{row.loss}</td>
                       <td className="text-center">{row.goals_for}</td>
                       <td className="text-center">{row.goals_against}</td>
+
                       <td className="text-center font-semibold">
                         {gd > 0 ? `+${gd}` : gd}
                       </td>
+
                       <td className="text-center font-bold">
                         {row.points}
                       </td>
@@ -188,8 +181,33 @@ export default function LeagueStandings({ onSelectTeam }: LeagueStandingsProps) 
                 })}
             </tbody>
           </table>
+
         </div>
       )}
+
+      {/* LEGEND */}
+      <div className="flex flex-wrap gap-4 mt-6 pt-4 border-t text-xs">
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 bg-amber-500 rounded"></div>
+          Champion
+        </div>
+
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 bg-blue-500 rounded"></div>
+          Champions League
+        </div>
+
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 bg-green-500 rounded"></div>
+          Europa League
+        </div>
+
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 bg-red-500 rounded"></div>
+          Relegation
+        </div>
+      </div>
+
     </div>
   );
 }
