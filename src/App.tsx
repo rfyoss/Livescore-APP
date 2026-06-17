@@ -173,7 +173,7 @@ export default function App() {
               <span className="font-extrabold text-sm sm:text-base tracking-tight block font-display">
                 LIVESCORE<span className="text-emerald-400">PNL</span>
                 </span>
-                <span className="text-[9px] font-mono text-slate-400 uppercase tracking-widest block leading-none">Live Pitch Tracker</span>
+                <span className="text-[9px] font-mono text-slate-400 uppercase tracking-widest block leading-none">Profit N Loss</span>
               </div>
             </div>
 
