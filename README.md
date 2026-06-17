@@ -1,61 +1,63 @@
-# ⚽ LiveScore PnL Cloud 
+# ⚽ LiveScore PNL
 
-Aplikasi LiveScore berbasis cloud yang menyediakan informasi pertandingan sepak bola secara real-time. Sistem ini dibangun menggunakan arsitektur terdistribusi yang terdiri dari Frontend, Backend Service, Data Engine Service, Database Cloud, dan Infrastruktur Cloud Deployment.
+LiveScore PNL merupakan aplikasi web livescore dan statistik sepak bola berbasis cloud computing yang dirancang untuk menyediakan informasi pertandingan secara cepat, terintegrasi, dan mudah dikembangkan.
 
-Data pertandingan diperoleh dari API Football, disinkronkan secara otomatis ke database cloud, kemudian disajikan kepada pengguna melalui aplikasi web secara real-time.
+Sistem dibangun menggunakan arsitektur terdistribusi yang terdiri dari Frontend, Backend Service, Data Engine Service, Database Cloud, dan Infrastruktur Cloud Deployment.
+
+---
 
 # 📖 Gambaran Umum
 
-LiveScore PnL Cloud merupakan platform informasi sepak bola yang menyediakan:
+LiveScore PNL menyediakan berbagai informasi sepak bola, antara lain:
 
-* Skor pertandingan secara real-time
+* Live Score pertandingan
 * Informasi tim
 * Informasi pemain
 * Klasemen liga
-* Pembaruan pertandingan secara otomatis
-* Infrastruktur berbasis cloud
+* Statistik pertandingan
+* Prediksi pertandingan
+* Football Insight Generator
 
-Proyek ini menerapkan pendekatan **Service-Oriented Architecture (SOA)**, di mana setiap komponen memiliki tanggung jawab yang berbeda dan saling terintegrasi.
+Sistem memanfaatkan layanan cloud untuk mendukung akses data yang terpusat, fleksibel, dan mudah dikembangkan.
 
 ---
 
 # 🏗 Arsitektur Sistem
 
 ```text
-                    API FOOTBALL
+                     API FOOTBALL
+                           │
+                           ▼
+
+               ┌─────────────────────┐
+               │     SUPABASE        │
+               │ PostgreSQL Database │
+               └──────────┬──────────┘
                           │
                           ▼
 
-            ┌─────────────────────────┐
-            │    Data Engine Service  │
-            │                         │
-            │ - Integrasi API         │
-            │ - Sinkronisasi Data     │
-            │ - Scheduler Otomatis    │
-            └───────────┬─────────────┘
-                        │
-                        ▼
+               ┌─────────────────────┐
+               │  Data Engine Service │
+               │                     │
+               │ - Scheduler         │
+               │ - Sync Jobs         │
+               │ - Data Processing   │
+               │ - Data Validation   │
+               └──────────┬──────────┘
+                          │
+                          ▼
 
-            ┌─────────────────────────┐
-            │ Supabase PostgreSQL     │
-            │ Database Cloud          │
-            └───────────┬─────────────┘
-                        │
-                        ▼
+               ┌─────────────────────┐
+               │  Express Backend    │
+               │     REST API        │
+               │     Socket.IO       │
+               └──────────┬──────────┘
+                          │
+                          ▼
 
-            ┌─────────────────────────┐
-            │ Express Backend Service │
-            │                         │
-            │ - REST API              │
-            │ - Socket.IO             │
-            └───────────┬─────────────┘
-                        │
-                        ▼
-
-            ┌─────────────────────────┐
-            │ React Frontend          │
-            │ User Interface          │
-            └─────────────────────────┘
+               ┌─────────────────────┐
+               │   React Frontend    │
+               └─────────────────────┘
 ```
 
 ---
@@ -74,7 +76,6 @@ Proyek ini menerapkan pendekatan **Service-Oriented Architecture (SOA)**, di man
 │ Frontend Service (React)             │
 │ Backend Service (Express.js)         │
 │ Data Engine Service                  │
-│ Scheduler & Sync Jobs                │
 │                                      │
 └──────────────────┬───────────────────┘
                    │
@@ -89,16 +90,14 @@ Proyek ini menerapkan pendekatan **Service-Oriented Architecture (SOA)**, di man
 
 # 🔄 Alur Data Sistem
 
-## Sinkronisasi Data
-
 ```text
 API Football
       │
       ▼
-Data Engine Service
+Supabase PostgreSQL
       │
       ▼
-Supabase PostgreSQL
+Data Engine Service
       │
       ▼
 Backend Service
@@ -109,78 +108,56 @@ Frontend
 
 ### Penjelasan
 
-1. Data pertandingan diambil dari API Football.
-2. Data Engine melakukan sinkronisasi dan validasi data.
-3. Data disimpan ke database Supabase PostgreSQL.
-4. Backend mengambil data dari database.
-5. Frontend menampilkan data kepada pengguna.
+1. Data pertandingan diperoleh dari API Football.
+2. Data disimpan pada database Supabase PostgreSQL.
+3. Data Engine membaca dan mengelola data yang tersimpan di Supabase.
+4. Backend menyediakan API untuk frontend.
+5. Frontend menampilkan informasi kepada pengguna.
 
-# ⏰ Jadwal Sinkronisasi Otomatis
+---
+
+# ⚙ Data Engine Service
+
+Data Engine Service bertugas mengelola data yang tersimpan pada Supabase PostgreSQL agar selalu siap digunakan oleh backend dan frontend.
+
+### Tanggung Jawab
+
+* Integrasi database Supabase
+* Scheduler Automation
+* Sync Jobs
+* Data Processing
+* Data Validation
+* Data Persistence
+* Monitoring proses sinkronisasi
+
+---
+
+# ⏰ Jadwal Sinkronisasi
 
 | Proses                    | Frekuensi      |
 | ------------------------- | -------------- |
 | Sinkronisasi Pertandingan | Setiap 1 Menit |
 | Sinkronisasi Klasemen     | Setiap 1 Jam   |
-| Sinkronisasi Tim          | Setiap Hari    |
-| Sinkronisasi Pemain       | Setiap Hari    |
+| Sinkronisasi Tim          | Harian         |
+| Sinkronisasi Pemain       | Harian         |
 
 ---
 
-# 🗄 Struktur Data
+# 🗄 Struktur Database
 
-## Tabel Teams
+Database menggunakan PostgreSQL yang dikelola melalui Supabase.
 
-Menyimpan informasi klub sepak bola:
+Tabel utama:
 
-* ID Tim
-* Nama Tim
-* Logo
-* Negara
-* Tahun Berdiri
-* Stadion
-
----
-
-## Tabel Players
-
-Menyimpan informasi pemain:
-
-* ID Pemain
-* ID Tim
-* Nama
-* Posisi
-* Kewarganegaraan
-* Foto
-
----
-
-## Tabel Matches
-
-Menyimpan data pertandingan:
-
-* ID Pertandingan
-* Liga
-* Tim Tuan Rumah
-* Tim Tamu
-* Tanggal Pertandingan
-* Status Pertandingan
-* Skor Tuan Rumah
-* Skor Tim Tamu
-
----
-
-## Tabel Standings
-
-Menyimpan data klasemen:
-
-* Tim
-* Main
-* Menang
-* Seri
-* Kalah
-* Gol Memasukkan
-* Gol Kebobolan
-* Poin
+* event
+* favorites
+* fixtures
+* league
+* live_matches
+* player_stats
+* players
+* standings
+* teams
 
 ---
 
@@ -188,21 +165,21 @@ Menyimpan data klasemen:
 
 ### Live Score
 
-* Pembaruan skor secara real-time
-* Status pertandingan langsung
+* Pembaruan skor pertandingan
 * Monitoring pertandingan berlangsung
+* Informasi status pertandingan
 
 ### Informasi Tim
 
 * Profil klub
 * Informasi stadion
-* Negara asal
+* Data liga
 
 ### Informasi Pemain
 
 * Data pemain
-* Posisi bermain
-* Informasi tim
+* Posisi pemain
+* Statistik pemain
 
 ### Klasemen Liga
 
@@ -210,11 +187,15 @@ Menyimpan data klasemen:
 * Jumlah poin
 * Statistik pertandingan
 
-### Komunikasi Real-Time
+### Prediction League
 
-* Socket.IO
-* Pembaruan data otomatis
-* Sinkronisasi frontend secara langsung
+* Prediksi hasil pertandingan
+* Perhitungan skor prediksi
+
+### Football Insight Generator
+
+* Ringkasan dan insight pertandingan
+* Analisis statistik sepak bola
 
 ---
 
@@ -234,13 +215,14 @@ Menyimpan data klasemen:
 
 ## Data Engine Service
 
-* Laravel Framework
-* Laravel Scheduler
-* Queue Job
+* Scheduler Jobs
+* Data Processing Service
+* Database Integration
 
 ## Database
 
-* Supabase PostgreSQL
+* PostgreSQL
+* Supabase
 
 ## Cloud Platform
 
@@ -254,55 +236,47 @@ Menyimpan data klasemen:
 
 # 👥 Pembagian Tugas Tim
 
-## 1. API & Database Engineer
+## API & Database Engineer
 
-Tanggung Jawab:
-
-* Konfigurasi API Football
-* Desain Database
-* Manajemen Supabase
-* Perancangan ERD
-
----
-
-## 2. Data Engineer
-
-Tanggung Jawab:
-
-* Data Engine Service
 * Integrasi API Football
-* Sinkronisasi Data
-* Scheduler Otomatis
-* Validasi Data
-* Monitoring Pipeline
+* Desain Database PostgreSQL
+* Pembuatan tabel dan relasi database
+* Konfigurasi Supabase
+* Penyediaan API Database
 
 ---
 
-## 3. Backend Engineer
+## Data Engineer
 
-Tanggung Jawab:
+* Integrasi Database Supabase
+* Scheduler Automation
+* Sync Jobs
+* Data Processing
+* Data Validation
+* Data Persistence
+* Monitoring Sinkronisasi Data
+
+---
+
+## Backend Engineer
 
 * REST API
 * Business Logic
 * Socket.IO
-* Integrasi Database
+* Integrasi Data
 
 ---
 
-## 4. Frontend Engineer
-
-Tanggung Jawab:
+## Frontend Engineer
 
 * User Interface
 * Dashboard Live Score
-* Halaman Tim dan Pemain
+* Halaman Statistik
 * User Experience
 
 ---
 
-## 5. Cloud Engineer
-
-Tanggung Jawab:
+## Cloud Engineer
 
 * Deployment Railway
 * Konfigurasi Environment
@@ -311,21 +285,34 @@ Tanggung Jawab:
 
 ---
 
-# 🎯 Tujuan Proyek
+# ✅ Kelebihan Sistem
 
-* Menyediakan informasi sepak bola secara real-time.
-* Mengimplementasikan arsitektur cloud modern.
-* Menerapkan sinkronisasi data otomatis.
-* Mengintegrasikan berbagai layanan dalam sistem terdistribusi.
-* Mengembangkan aplikasi web yang responsif dan scalable.
+* Arsitektur cloud yang fleksibel dan mudah dikembangkan.
+* Sinkronisasi data otomatis melalui scheduler.
+* Pemisahan layanan frontend, backend, data engine, dan database.
+* Mendukung pembaruan informasi secara cepat.
+* Memiliki fitur tambahan seperti Prediction League dan Football Insight Generator.
 
 ---
 
-# 📈 Pengembangan Selanjutnya
+# ⚠ Keterbatasan Sistem
 
-* Implementasi Redis Cache
-* Dukungan Multi-Liga
-* Dashboard Analitik Pertandingan
-* Sistem Notifikasi
-* Event-Driven Architecture
-* Prediksi Hasil Pertandingan Berbasis Machine Learning
+* Bergantung pada ketersediaan API Football.
+* Pembaruan data dipengaruhi oleh batas request (rate limit) API.
+* Menggunakan layanan cloud versi gratis/trial yang memiliki keterbatasan sumber daya.
+* Konfigurasi dan integrasi multi-service relatif lebih kompleks.
+
+---
+
+# 🎯 Tujuan Proyek
+
+* Menyediakan informasi sepak bola secara cepat dan terintegrasi.
+* Mengimplementasikan konsep cloud computing pada aplikasi web.
+* Menerapkan arsitektur layanan yang terpisah dan mudah dikembangkan.
+* Mendukung pengelolaan data secara otomatis dan efisien.
+
+---
+
+# 📌 Kesimpulan
+
+LiveScore PNL merupakan aplikasi livescore dan statistik sepak bola berbasis cloud computing yang mengintegrasikan Supabase PostgreSQL, Data Engine Service, Backend Service, dan Frontend dalam satu ekosistem layanan terdistribusi. Sistem mampu menyediakan informasi pertandingan secara cepat, terintegrasi, dan mudah dikembangkan melalui pemanfaatan teknologi cloud dan mekanisme sinkronisasi data otomatis.
