@@ -491,7 +491,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1 text-center md:text-left">
             <span className="font-bold text-slate-200 block text-sm font-display">
-              STRIKER FOOTBALL TRACKER
+              LIVESCOREPNL
             </span>
             <p className="max-w-md text-slate-400 leading-relaxed text-[11px]">
               Full-Stack relational soccer monitoring system driven by Node.js, Express, Socket.IO updates, and an animated React front-end dashboard.
