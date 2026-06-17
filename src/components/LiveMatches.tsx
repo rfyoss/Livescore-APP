@@ -64,10 +64,10 @@ export default function LiveMatches({ onSelectMatch }: LiveMatchesProps) {
         
         <div className="relative z-10 max-w-lg">
           <div className="bg-emerald-500/10 text-emerald-450 border border-emerald-500/20 text-[10px] uppercase tracking-widest px-3 py-1 rounded-full w-max font-extrabold mb-3.5 flex items-center gap-1.5 font-mono">
-            <Zap className="w-3.5 h-3.5 text-emerald-400 fill-emerald-400 animate-pulse" /> Live Tracker Mode Active
+            <Zap className="w-3.5 h-3.5 text-emerald-400 fill-emerald-400 animate-pulse" /> Live Match Mode Active
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-2 font-display">
-            Real Time Live Match
+            Real Time Match Football
           </h1>
           <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-5">
             Premiere League campaigns with live stats, real-time score overlays, and simulated action updates.
