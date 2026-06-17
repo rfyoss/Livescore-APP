@@ -95,11 +95,17 @@ export const searchPlayers = async (
         })
       : players;
 
+    // PERUBAHAN: Menambahkan fallback nilai aman untuk mengantisipasi data null / undefined
     const enriched = filtered.map((player: any) => ({
       ...player,
-      team: store.teams.find(
-        t => t.id === player.team_id
-      )
+      name: player.name || 'Unknown Player',
+      position: player.position || 'Unknown',
+      nationality: player.nationality || 'Unknown',
+      age: player.age || 0,
+      team:
+        store.teams.find(
+          t => t.id === player.team_id
+        ) || null
     }));
 
     await redis.set(cacheKey, enriched, 'players');
