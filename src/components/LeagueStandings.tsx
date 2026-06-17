@@ -15,7 +15,7 @@ export default function LeagueStandings({
     setStandings([
       {
         id: 1,
-        team_id: 1,
+        team_id: 40, // Liverpool asli = 40
         played: 38,
         win: 25,
         draw: 9,
@@ -25,12 +25,12 @@ export default function LeagueStandings({
         points: 84,
         team: {
           name: 'Liverpool',
-          logo: 'https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg',
+          logo: 'https://media.api-sports.io/football/teams/40.png',
         },
       },
       {
         id: 2,
-        team_id: 2,
+        team_id: 42, // Arsenal asli = 42
         played: 38,
         win: 20,
         draw: 14,
@@ -40,12 +40,12 @@ export default function LeagueStandings({
         points: 74,
         team: {
           name: 'Arsenal',
-          logo: 'https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg',
+          logo: 'https://media.api-sports.io/football/teams/42.png',
         },
       },
       {
         id: 3,
-        team_id: 3,
+        team_id: 50, // Manchester City asli = 50
         played: 38,
         win: 21,
         draw: 8,
@@ -55,12 +55,12 @@ export default function LeagueStandings({
         points: 71,
         team: {
           name: 'Manchester City',
-          logo: 'https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg',
+          logo: 'https://media.api-sports.io/football/teams/50.png',
         },
       },
       {
         id: 4,
-        team_id: 4,
+        team_id: 49, // Chelsea asli = 49
         played: 38,
         win: 20,
         draw: 9,
@@ -70,12 +70,12 @@ export default function LeagueStandings({
         points: 69,
         team: {
           name: 'Chelsea',
-          logo: 'https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg',
+          logo: 'https://media.api-sports.io/football/teams/49.png',
         },
       },
       {
         id: 5,
-        team_id: 5,
+        team_id: 34, // Newcastle asli = 34
         played: 38,
         win: 20,
         draw: 6,
@@ -85,12 +85,12 @@ export default function LeagueStandings({
         points: 66,
         team: {
           name: 'Newcastle',
-          logo: 'https://upload.wikimedia.org/wikipedia/en/5/56/Newcastle_United_Logo.svg',
+          logo: 'https://media.api-sports.io/football/teams/34.png',
         },
       },
       {
         id: 6,
-        team_id: 6,
+        team_id: 66, // Aston Villa asli = 66
         played: 38,
         win: 19,
         draw: 9,
@@ -105,7 +105,7 @@ export default function LeagueStandings({
       },
       {
         id: 7,
-        team_id: 7,
+        team_id: 65, // Nottingham Forest asli = 65
         played: 38,
         win: 19,
         draw: 8,
@@ -115,12 +115,12 @@ export default function LeagueStandings({
         points: 65,
         team: {
           name: 'Nottingham Forest',
-          logo: 'https://upload.wikimedia.org/wikipedia/en/e/e5/Nottingham_Forest_F.C._logo.svg',
+          logo: 'https://media.api-sports.io/football/teams/65.png',
         },
       },
       {
         id: 8,
-        team_id: 8,
+        team_id: 51, // Brighton asli = 51
         played: 38,
         win: 16,
         draw: 13,
@@ -135,7 +135,7 @@ export default function LeagueStandings({
       },
       {
         id: 9,
-        team_id: 9,
+        team_id: 35, // Bournemouth asli = 35
         played: 38,
         win: 15,
         draw: 11,
@@ -145,12 +145,12 @@ export default function LeagueStandings({
         points: 56,
         team: {
           name: 'Bournemouth',
-          logo: 'https://upload.wikimedia.org/wikipedia/en/e/e5/AFC_Bournemouth_%282013%29.svg',
+          logo: 'https://media.api-sports.io/football/teams/35.png',
         },
       },
       {
         id: 10,
-        team_id: 10,
+        team_id: 55, // Brentford asli = 55
         played: 38,
         win: 16,
         draw: 8,
@@ -160,12 +160,12 @@ export default function LeagueStandings({
         points: 56,
         team: {
           name: 'Brentford',
-          logo: 'https://upload.wikimedia.org/wikipedia/en/2/2a/Brentford_FC_crest.svg',
+          logo: 'https://media.api-sports.io/football/teams/55.png',
         },
       },
       {
         id: 11,
-        team_id: 11,
+        team_id: 36, // Fulham asli = 36
         played: 38,
         win: 15,
         draw: 9,
@@ -175,12 +175,12 @@ export default function LeagueStandings({
         points: 54,
         team: {
           name: 'Fulham',
-          logo: 'https://upload.wikimedia.org/wikipedia/en/e/eb/Fulham_FC_%28shield%29.svg',
+          logo: 'https://media.api-sports.io/football/teams/36.png',
         },
       },
       {
         id: 12,
-        team_id: 12,
+        team_id: 52, // Crystal Palace asli = 52
         played: 38,
         win: 13,
         draw: 14,
@@ -190,12 +190,12 @@ export default function LeagueStandings({
         points: 53,
         team: {
           name: 'Crystal Palace',
-          logo: 'https://upload.wikimedia.org/wikipedia/en/a/a2/Crystal_Palace_FC_logo_%282022%29.svg',
+          logo: 'https://media.api-sports.io/football/teams/52.png',
         },
       },
       {
         id: 13,
-        team_id: 13,
+        team_id: 45, // Everton asli = 45
         played: 38,
         win: 11,
         draw: 15,
@@ -205,12 +205,12 @@ export default function LeagueStandings({
         points: 48,
         team: {
           name: 'Everton',
-          logo: 'https://upload.wikimedia.org/wikipedia/en/7/7c/Everton_FC_logo.svg',
+          logo: 'https://media.api-sports.io/football/teams/45.png',
         },
       },
       {
         id: 14,
-        team_id: 14,
+        team_id: 48, // West Ham asli = 48
         played: 38,
         win: 11,
         draw: 10,
@@ -220,12 +220,12 @@ export default function LeagueStandings({
         points: 43,
         team: {
           name: 'West Ham',
-          logo: 'https://upload.wikimedia.org/wikipedia/en/c/c2/West_Ham_United_FC_logo.svg',
+          logo: 'https://media.api-sports.io/football/teams/48.png',
         },
       },
       {
         id: 15,
-        team_id: 15,
+        team_id: 33, // Manchester United asli = 33
         played: 38,
         win: 11,
         draw: 9,
@@ -235,12 +235,12 @@ export default function LeagueStandings({
         points: 42,
         team: {
           name: 'Manchester United',
-          logo: 'https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg',
+          logo: 'https://media.api-sports.io/football/teams/33.png',
         },
       },
       {
         id: 16,
-        team_id: 16,
+        team_id: 39, // Wolves asli = 39
         played: 38,
         win: 12,
         draw: 6,
@@ -250,12 +250,12 @@ export default function LeagueStandings({
         points: 42,
         team: {
           name: 'Wolves',
-          logo: 'https://upload.wikimedia.org/wikipedia/en/f/fc/Wolverhampton_Wanderers.svg',
+          logo: 'https://media.api-sports.io/football/teams/39.png',
         },
       },
       {
         id: 17,
-        team_id: 17,
+        team_id: 47, // Tottenham asli = 47
         played: 38,
         win: 11,
         draw: 5,
@@ -265,12 +265,12 @@ export default function LeagueStandings({
         points: 38,
         team: {
           name: 'Tottenham',
-          logo: 'https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg',
+          logo: 'https://media.api-sports.io/football/teams/47.png',
         },
       },
       {
         id: 18,
-        team_id: 18,
+        team_id: 46, // Leicester City asli = 46
         played: 38,
         win: 6,
         draw: 7,
@@ -280,12 +280,12 @@ export default function LeagueStandings({
         points: 25,
         team: {
           name: 'Leicester City',
-          logo: 'https://upload.wikimedia.org/wikipedia/en/2/2d/Leicester_City_crest.svg',
+          logo: 'https://media.api-sports.io/football/teams/46.png',
         },
       },
       {
         id: 19,
-        team_id: 19,
+        team_id: 57, // Ipswich Town asli = 57
         played: 38,
         win: 4,
         draw: 10,
@@ -295,12 +295,12 @@ export default function LeagueStandings({
         points: 22,
         team: {
           name: 'Ipswich Town',
-          logo: 'https://upload.wikimedia.org/wikipedia/en/4/43/Ipswich_Town.svg',
+          logo: 'https://media.api-sports.io/football/teams/57.png',
         },
       },
       {
         id: 20,
-        team_id: 20,
+        team_id: 41, // Southampton asli = 41
         played: 38,
         win: 2,
         draw: 6,
@@ -310,7 +310,7 @@ export default function LeagueStandings({
         points: 12,
         team: {
           name: 'Southampton',
-          logo: 'https://upload.wikimedia.org/wikipedia/en/c/c9/FC_Southampton.svg',
+          logo: 'https://media.api-sports.io/football/teams/41.png',
         },
       },
     ]);
@@ -363,12 +363,10 @@ export default function LeagueStandings({
 
             <tbody>
               {standings.map((row, index) => {
-                const gd =
-                  row.goals_for - row.goals_against;
-
+                const gd = row.goals_for - row.goals_against;
                 const position = index + 1;
 
-                const borderColor =
+                const zoneBorder =
                   position === 1
                     ? 'border-l-4 border-amber-500'
                     : position <= 4
@@ -382,12 +380,10 @@ export default function LeagueStandings({
                 return (
                   <tr
                     key={row.id}
-                    onClick={() =>
-                      onSelectTeam(row.team_id)
-                    }
-                    className={`${borderColor} hover:bg-slate-50 cursor-pointer transition`}
+                    onClick={() => onSelectTeam(row.team_id)}
+                    className="hover:bg-slate-50 cursor-pointer transition select-none"
                   >
-                    <td className="p-3 text-center font-bold">
+                    <td className={`p-3 text-center font-bold ${zoneBorder}`}>
                       {position}
                     </td>
 
@@ -396,7 +392,7 @@ export default function LeagueStandings({
                         <img
                           src={row.team.logo}
                           alt={row.team.name}
-                          className="w-8 h-8"
+                          className="w-8 h-8 object-contain"
                         />
 
                         <span className="font-semibold">
