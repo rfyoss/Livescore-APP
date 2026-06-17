@@ -1,169 +1,195 @@
 import { useEffect, useState } from 'react';
 import { Trophy } from 'lucide-react';
 
-interface Props {
+interface LeagueStandingsProps {
   onSelectTeam: (teamId: number) => void;
 }
 
-export default function LeagueStandings({ onSelectTeam }: Props) {
-  const [standings, setStandings] = useState<any[]>([]);
+export default function LeagueStandings({ onSelectTeam }: LeagueStandingsProps) {
   const [loading, setLoading] = useState(true);
+  const [standings, setStandings] = useState<any[]>([]);
 
   useEffect(() => {
-    fetchStandings();
+    setStandings([
+      {
+        id: 40,
+        team_id: 40,
+        played: 38,
+        win: 29,
+        draw: 6,
+        loss: 3,
+        goals_for: 92,
+        goals_against: 28,
+        points: 93,
+        team: {
+          name: 'Liverpool',
+          logo: 'https://media.api-sports.io/football/teams/40.png',
+        },
+      },
+      {
+        id: 42,
+        team_id: 42,
+        played: 38,
+        win: 27,
+        draw: 8,
+        loss: 3,
+        goals_for: 88,
+        goals_against: 32,
+        points: 89,
+        team: {
+          name: 'Arsenal',
+          logo: 'https://media.api-sports.io/football/teams/42.png',
+        },
+      },
+      {
+        id: 50,
+        team_id: 50,
+        played: 38,
+        win: 26,
+        draw: 9,
+        loss: 3,
+        goals_for: 85,
+        goals_against: 30,
+        points: 87,
+        team: {
+          name: 'Man City',
+          logo: 'https://media.api-sports.io/football/teams/50.png',
+        },
+      },
+    ]);
+
+    setLoading(false);
   }, []);
 
-  const fetchStandings = async () => {
-    try {
-      const res = await fetch('/api/standings');
-      const data = await res.json();
-      setStandings(data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
+  const getZone = (pos: number) => {
+    if (pos <= 4) return 'UCL';
+    if (pos <= 6) return 'EUROPA';
+    if (pos <= 7) return 'CONFERENCE';
+    if (pos >= 18) return 'RELEGATION';
+    return '';
+  };
+
+  const getZoneStyle = (zone: string) => {
+    switch (zone) {
+      case 'UCL':
+        return 'text-blue-600 font-bold';
+      case 'EUROPA':
+        return 'text-green-600 font-bold';
+      case 'CONFERENCE':
+        return 'text-emerald-600 font-bold';
+      case 'RELEGATION':
+        return 'text-red-600 font-bold';
+      default:
+        return 'text-slate-400';
     }
   };
 
-  const getZone = (pos: number) => {
-    if (pos <= 4) return 'ucl';
-    if (pos <= 6) return 'europa';
-    if (pos === 7 || pos === 8) return 'conference';
-    if (pos >= 18) return 'relegation';
-    return 'none';
-  };
-
-  if (loading) {
-    return <div className="p-6">Loading standings...</div>;
-  }
-
   return (
-    <div className="bg-white border rounded-2xl p-6 shadow-sm">
+    <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
 
-      {/* HEADER */}
-      <div className="mb-5 border-b pb-4">
-        <div className="flex items-center gap-2">
+      {/* HEADER GOOGLE STYLE */}
+      <div className="mb-6 pb-4 border-b">
+        <h2 className="text-xl font-bold flex items-center gap-2">
           <Trophy className="w-5 h-5 text-amber-500" />
-          <h2 className="text-xl font-bold">
-            Premier League
-          </h2>
-        </div>
+          Premier League
+        </h2>
 
-        <p className="text-sm text-gray-500 mt-1">
+        <p className="text-sm text-slate-500">
           2024–2025 Season Standings
         </p>
       </div>
 
-      {/* TABLE */}
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-
-          <thead className="bg-gray-50">
-            <tr className="border-b">
-              <th className="p-3">#</th>
-              <th className="p-3 text-left">Club</th>
-              <th className="p-3">MP</th>
-              <th className="p-3">W</th>
-              <th className="p-3">D</th>
-              <th className="p-3">L</th>
-              <th className="p-3">GF</th>
-              <th className="p-3">GA</th>
-              <th className="p-3">GD</th>
-              <th className="p-3">Pts</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {standings.map((team, index) => {
-              const pos = index + 1;
-              const zone = getZone(pos);
-
-              const zoneColor =
-                zone === 'ucl'
-                  ? 'border-l-4 border-blue-500'
-                  : zone === 'europa'
-                  ? 'border-l-4 border-green-500'
-                  : zone === 'conference'
-                  ? 'border-l-4 border-emerald-500'
-                  : zone === 'relegation'
-                  ? 'border-l-4 border-red-500'
-                  : '';
-
-              return (
-                <tr
-                  key={team.team_id}
-                  onClick={() => onSelectTeam(team.team_id)}
-                  className={`${zoneColor} hover:bg-gray-50 cursor-pointer`}
-                >
-                  <td className="p-3 text-center font-bold">
-                    {pos}
-                  </td>
-
-                  <td className="p-3 flex items-center gap-3">
-                    <img
-                      src={team.team.logo}
-                      className="w-7 h-7"
-                    />
-                    <span className="font-medium">
-                      {team.team.name}
-                    </span>
-                  </td>
-
-                  <td className="p-3 text-center">
-                    {team.played}
-                  </td>
-                  <td className="p-3 text-center">
-                    {team.win}
-                  </td>
-                  <td className="p-3 text-center">
-                    {team.draw}
-                  </td>
-                  <td className="p-3 text-center">
-                    {team.loss}
-                  </td>
-                  <td className="p-3 text-center">
-                    {team.goals_for}
-                  </td>
-                  <td className="p-3 text-center">
-                    {team.goals_against}
-                  </td>
-                  <td className="p-3 text-center font-semibold">
-                    {team.goals_for - team.goals_against}
-                  </td>
-                  <td className="p-3 text-center font-bold">
-                    {team.points}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-
-      {/* LEGEND (INI HARUS DI BAWAH TABLE) */}
-      <div className="flex flex-wrap gap-4 mt-6 pt-4 border-t text-xs">
-
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 bg-blue-500"></div>
-          Champions League
+      {loading ? (
+        <div className="py-20 text-center text-slate-500">
+          Loading standings...
         </div>
+      ) : (
+        <div className="overflow-x-auto">
 
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 bg-green-500"></div>
-          Europa League
+          {/* ZONE LABELS */}
+          <div className="flex flex-wrap gap-4 text-xs mb-4">
+            <span className="text-blue-600 font-bold">Champions League</span>
+            <span className="text-green-600 font-bold">Europa League</span>
+            <span className="text-emerald-600 font-bold">Conference League</span>
+            <span className="text-red-600 font-bold">Relegation</span>
+          </div>
+
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-slate-50 border-b text-slate-600">
+                <th className="p-3 text-left">#</th>
+                <th className="p-3 text-left">Club</th>
+                <th className="p-3">MP</th>
+                <th className="p-3">W</th>
+                <th className="p-3">D</th>
+                <th className="p-3">L</th>
+                <th className="p-3">GF</th>
+                <th className="p-3">GA</th>
+                <th className="p-3">GD</th>
+                <th className="p-3 font-bold">Pts</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {standings
+                .sort((a, b) => b.points - a.points)
+                .map((row, index) => {
+                  const pos = index + 1;
+                  const gd = row.goals_for - row.goals_against;
+                  const zone = getZone(pos);
+
+                  return (
+                    <tr
+                      key={row.id}
+                      onClick={() => onSelectTeam(row.team_id)}
+                      className="border-b hover:bg-slate-50 cursor-pointer transition"
+                    >
+
+                      {/* POSITION + ZONE */}
+                      <td className="p-3 font-bold">
+                        {pos}
+                        <div className={`text-[10px] ${getZoneStyle(zone)}`}>
+                          {zone}
+                        </div>
+                      </td>
+
+                      {/* CLUB */}
+                      <td className="p-3">
+                        <div className="flex items-center gap-3">
+                          <img
+                            src={row.team?.logo || 'https://via.placeholder.com/30'}
+                            alt={row.team?.name}
+                            className="w-8 h-8 object-contain"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src =
+                                'https://via.placeholder.com/30';
+                            }}
+                          />
+                          <span className="font-semibold">
+                            {row.team?.name || 'Unknown Team'}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td className="text-center">{row.played}</td>
+                      <td className="text-center">{row.win}</td>
+                      <td className="text-center">{row.draw}</td>
+                      <td className="text-center">{row.loss}</td>
+                      <td className="text-center">{row.goals_for}</td>
+                      <td className="text-center">{row.goals_against}</td>
+                      <td className="text-center font-semibold">
+                        {gd > 0 ? `+${gd}` : gd}
+                      </td>
+                      <td className="text-center font-bold">
+                        {row.points}
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
         </div>
-
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 bg-emerald-500"></div>
-          Conference League
-        </div>
-
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 bg-red-500"></div>
-          Relegation
-        </div>
-
-      </div>
+      )}
     </div>
   );
 }
